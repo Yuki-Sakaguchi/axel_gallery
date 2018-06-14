@@ -1,0 +1,231 @@
+/* ========================================
+
+    animation
+        キーフレームアニメーションを定義する
+
+    INDEX
+        - opacity
+
+======================================== */
+/**
+ * スケールを大きくする
+ */
+.a-scale {
+  transform: scale(0);
+
+  &.active {
+    animation-name: scale;
+  }
+}
+
+@keyframes scale {
+  0%, 100% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.4);
+  }
+}
+
+/**
+ * フェードインする
+ */
+.a-fadein-up {
+  opacity: 0; 
+  transform: translateY(20px);
+
+  &.active {
+    animation-name: fadein-up;
+  }
+}
+
+@keyframes fadein-up {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+}
+
+
+/* ==================
+  animationの素材クラス
+================== */
+/**
+ * animation-duration
+ */
+// .a-duration-00 〜 .a-duration-50
+@for $i from 0 through 50 {
+  $tmp: $i;
+  @if $i < 10 {
+    $tmp: "0#{$i}";
+  }
+  .a-duration--#{$tmp} {
+    animation-duration: ($i/10)*1s;
+  }
+}
+
+/**
+ * animation-delay
+ */
+// .a-delay-00 〜 .a-delay-50
+@for $i from 0 through 50 {
+  $tmp: $i;
+  @if $i < 10 {
+    $tmp: "0#{$i}";
+  }
+
+  .a-delay--#{$tmp} {
+    animation-delay: ($i/10)*1s;;
+  }
+}
+
+/**
+ * animation-iteration-count
+ */
+.a-count {
+  // .a-count--0 〜 .a-count--10
+  @for $i from 0 through 10 {
+    &--#{$i} {
+      animation-iteration-count: #{$i};
+    }
+  }
+
+  &--infinite {
+    animation-iteration-count: infinite;
+  }
+}
+
+/**
+ * animation-direction
+ */
+.a-direction {
+  &--on {
+    animation-direction: alternat;
+  }
+  &--off {
+    animation-direction: normal;
+  }
+}
+
+/**
+ * animation-fill-mode
+ */
+.a-mode {
+  &--forwards {
+    animation-fill-mode: forwards;
+  }
+
+  &--backwards {
+    animation-fill-mode: backwards;
+  }
+
+  &--both {
+    animation-fill-mode: both;
+  }
+}
+
+/**
+ * animate-timing-function
+ */
+.a-timing {
+  // linear
+  &--linear {
+    animation-timing-function: $EASE_LINEAR;
+  }
+
+  // sine
+  &--in-sine {
+    animation-timing-function: $EASE_IN_SINE;
+  }
+  &--out-sine {
+    animation-timing-function: $EASE_OUT_SINE;
+  }
+  &--in-out-sine {
+    animation-timing-function: $EASE_IN_OUT_SINE;
+  }
+
+  // quad
+  &--in-quad {
+    animation-timing-function: $EASE_IN_QUAD;
+  }
+  &--out-quad {
+    animation-timing-function: $EASE_OUT_QUAD;
+  }
+  &--in-out-quad {
+    animation-timing-function: $EASE_IN_OUT_QUAD;
+  }
+
+  // cubic
+  &--in-cubic {
+    animation-timing-function: $EASE_IN_CUBIC;
+  }
+  &--out-cubic {
+    animation-timing-function: $EASE_OUT_CUBIC;
+  }
+  &--in-out-cubic {
+    animation-timing-function: $EASE_IN_OUT_CUBIC;
+  }
+
+  // quart
+  &--in-quart {
+    animation-timing-function: $EASE_IN_QUART;
+  }
+  &--out-quart {
+    animation-timing-function: $EASE_OUT_QUART;
+  }
+  &--in-out-quart {
+    animation-timing-function: $EASE_IN_OUT_QUART;
+  }
+
+  // quint
+  &--in-quint {
+    animation-timing-function: $EASE_IN_QUINT;
+  }
+  &--out-quint {
+    animation-timing-function: $EASE_OUT_QUINT;
+  }
+  &--in-out-quint {
+    animation-timing-function: $EASE_IN_OUT_QUINT;
+  }
+
+  // expo
+  &--in-expo {
+    animation-timing-function: $EASE_IN_EXPO;
+  }
+  &--out-expo {
+    animation-timing-function: $EASE_OUT_EXPO;
+  }
+  &--in-out-expo {
+    animation-timing-function: $EASE_IN_OUT_EXPO;
+  }
+
+  // circ
+  &--in-circ {
+    animation-timing-function: $EASE_IN_CIRC;
+  }
+  &--out-circ {
+    animation-timing-function: $EASE_OUT_CIRC;
+  }
+  &--in-out-circ {
+    animation-timing-function: $EASE_IN_OUT_CIRC;
+  }
+
+  // back
+  &--in-back {
+    animation-timing-function: $EASE_IN_BACK;
+  }
+  &--out-back {
+    animation-timing-function: $EASE_OUT_BACK;
+  }
+  &--in-out-back {
+    animation-timing-function: $EASE_IN_OUT_BACK;
+  }
+}
+
+
+
+

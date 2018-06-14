@@ -1,0 +1,124 @@
+// ========================================
+//
+//      mixins
+//          何度も使う重複する記述を定義
+//    
+//      INDEX
+//          - float
+//          - media query
+//
+// ========================================
+
+// ========================================
+//    float
+// ========================================
+// floatの解除
+@mixin clearfix() {
+    &:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+}
+
+
+// ========================================
+//    media query
+// ========================================
+
+// ----------------------------------------
+// ブラウザ幅に応じて反映するスタイルを変えるmixin
+// これを使えばあちこちに同じクラス名を書かなくて済む
+//
+// ＜前提＞
+//  $BP_L: 1000px;
+//  $BP_M: 750px;
+//  $BP_S; 480px;
+//
+// ＜例＞
+//  .box {
+//      // 全幅で効くスタイル
+//     
+//      @include mq-l() {
+//          // 1000px以下の時に効くスタイル
+//      }
+//
+//      @include mq-m() {
+//          // 750px以下の時に効くスタイル
+//      }
+//
+//      @include mq-s() {
+//          // 480px以下の時に効くスタイル
+//      }
+//  }
+// ----------------------------------------
+
+// pcサイズのみ有効のスタイルをつける
+// 引数にfalseを設定すればpcサイズ以外有効になる
+@mixin mq-l($is_pc: true) {
+    @if $is_pc {
+        @media screen and (min-width: $BP_M + 1) and (max-width: $BP_L) {
+            @content;
+        }
+    } @else {
+        @media not screen and (min-width: $BP_M + 1) and (max-width: $BP_L) {
+            @content;
+        }
+    }
+}
+
+// tbサイズのみ有効のスタイルをつける
+// 引数にfalseを設定すればtbサイズ以外有効になる
+@mixin mq-m($is_tb: true) {
+    @if $is_tb {
+        @media screen and (min-width: $BP_S + 1) and (max-width: $BP_M) {
+            @content;
+        }
+    } @else {
+        @media not screen and (min-width: $BP_S + 1) and (max-width: $BP_M) {
+            @content;
+        }
+    }
+}
+
+// spサイズのみ有効のスタイルをつける
+// 引数にfalseを設定すればspサイズ以外有効になる
+@mixin mq-s($is_sp: true) {
+    @if $is_sp {
+        @media screen and (max-width: $BP_S) {
+            @content;
+        }
+    } @else {
+        @media not screen and (max-width: $BP_S) {
+            @content;
+        }
+    }
+}
+
+// mobileサイズのみ有効のスタイルをつける
+// 引数にfalseを設定すればmobileサイズ以外有効になる
+@mixin mq-mb($is_mobile: true) {
+    @if $is_mobile {
+        @media screen and (max-width: $BP_M) {
+            @content;
+        }
+    } @else {
+        @media not screen and (max-width: $BP_M) {
+            @content;
+        }
+    }
+}
+
+// pcサイズのみ有効のスタイルをつける
+// 引数にfalseを設定すればmobileサイズ以外有効になる
+@mixin mq-pc($is_pc: true) {
+    @if $is_pc {
+        @media screen and (min-width: $BP_M + 1) {
+            @content;
+        }
+    } @else {
+        @media not screen and (min-width: $BP_M + 1) {
+            @content;
+        }
+    }
+}

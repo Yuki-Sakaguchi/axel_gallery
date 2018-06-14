@@ -1,6 +1,5 @@
 # axel_gallery
-
-> Nuxt.js project
+https://yuki-sakaguchi.github.io/axel_gallery/
 
 ## Build Setup
 

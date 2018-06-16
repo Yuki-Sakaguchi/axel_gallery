@@ -6,8 +6,8 @@
       <span></span>
     </div>
     <ul :class="{ active: isActive }" class="menu-list">
-      <li @click="current" class="menu-list__item"><nuxt-link to="/">top</nuxt-link></li>
-      <li @click="current" class="menu-list__item"><nuxt-link to="/about/">about</nuxt-link></li>
+      <li class="menu-list__item"><nuxt-link to="/">top</nuxt-link></li>
+      <li class="menu-list__item"><nuxt-link to="/about/">about</nuxt-link></li>
     </ul>
   </nav>
 </template>
@@ -18,18 +18,17 @@ export default {
     isActive: false
   }),
   methods: {
+    // メニューの開閉
     menuToggle() {
       this.isActive = !this.isActive;
-    },
-    current(a) {
-      var elListItem = document.querySelectorAll('.menu-list__item');
-
-      [].forEach.call(elListItem, (e) => {
-        e.className = 'menu-list__item';
-      });
-
-      console.log(a);
-      console.log(this);
+    }
+  },
+  watch: {
+    '$route': function (to, from) {
+      if (to.path !== from.path) {
+        // 画面が遷移したらメニューを閉じる
+        this.isActive = false;
+      }
     }
   }
 }
@@ -108,7 +107,6 @@ export default {
 
   &__item {
     position: relative;
-    padding: 10px 20px;
     cursor: pointer;
 
     &:before {
@@ -130,6 +128,9 @@ export default {
     }
 
     a {
+      padding: 10px 20px;
+      display: block;
+
       &.nuxt-link-exact-active {
         &:after {
           content: "";

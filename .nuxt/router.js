@@ -4,6 +4,7 @@ import Router from 'vue-router'
 Vue.use(Router)
 
 const _60e2cb58 = () => import('../pages/about.vue' /* webpackChunkName: "pages/about" */).then(m => m.default || m)
+const _35f4d8cd = () => import('../pages/form.vue' /* webpackChunkName: "pages/form" */).then(m => m.default || m)
 const _217315ce = () => import('../pages/index.vue' /* webpackChunkName: "pages/index" */).then(m => m.default || m)
 
 
@@ -68,6 +69,11 @@ export function createRouter () {
 			path: "/about",
 			component: _60e2cb58,
 			name: "about"
+		},
+		{
+			path: "/form",
+			component: _35f4d8cd,
+			name: "form"
 		},
 		{
 			path: "/",

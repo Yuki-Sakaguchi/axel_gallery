@@ -1,5 +1,6 @@
 <template>
   <nav class="global-menu">
+    <h1 class="page-title"><nuxt-link to="/">AXEL GALLERY</nuxt-link></h1>
     <div @click="menuToggle" :class="{ active: isActive }" class="menu-trigger">
       <span></span>
       <span></span>
@@ -8,7 +9,9 @@
     <ul :class="{ active: isActive }" class="menu-list">
       <li class="menu-list__item"><nuxt-link to="/">top</nuxt-link></li>
       <li class="menu-list__item"><nuxt-link to="/about/">about</nuxt-link></li>
+      <li class="menu-list__item"><nuxt-link to="/form/">form</nuxt-link></li>
     </ul>
+    <nuxt-link class="add-btn" to="/form/"></nuxt-link>
   </nav>
 </template>
 
@@ -36,6 +39,24 @@ export default {
 
 
 <style lang="scss">
+// タイトル
+.page-title {
+  position: absolute;
+  right: 0;
+  left: 0;
+  text-align: center;
+  margin: auto;
+
+  a {
+    color: #9E9E9E;
+    transition: 0.3s;
+
+    &:hover {
+      opacity: 0.6;
+    }
+  }
+}
+
 // メニュー
 .global-menu {
   position: relative;
@@ -146,6 +167,51 @@ export default {
         }
       }
     }
+  }
+}
+
+// addボタン
+.add-btn {
+  $width_size: 60%;
+  $height_size: 2px;
+  position: absolute;
+  right: 12px;
+  top: 9px;
+  width: 30px;
+  height: 30px;
+  background-color: #41B883;
+  border-radius: 100%;
+  transition: 0.3s;
+
+  &:hover {
+    opacity: 0.6;
+    transform: rotate(90deg);
+  }
+
+  &:before {
+    content: "";
+    width: $width_size;
+    height: $height_size;
+    background-color: white;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+  }
+
+  &:after {
+    content: "";
+    height: $width_size;
+    width: $height_size;
+    background-color: white;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
   }
 }
 </style>

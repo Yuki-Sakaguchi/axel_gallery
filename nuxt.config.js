@@ -45,5 +45,5 @@ module.exports = {
   // 全ページで読み込まれるcssを定義
   css: [
     '@/assets/css/main.scss'
-  ]
+  ],
 }

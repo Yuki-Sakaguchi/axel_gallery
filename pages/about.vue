@@ -5,6 +5,12 @@
       <div class="links">
         <nuxt-link to="/" class="button--green">top</nuxt-link>
       </div>
+      <p>
+        説明の文言が入ります。説明の文言が入ります。
+        説明の文言が入ります。説明の文言が入ります。
+        説明の文言が入ります。説明の文言が入ります。
+        説明の文言が入ります。説明の文言が入ります。
+      </p>
     </div>
   </section>
 </template>

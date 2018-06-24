@@ -11,6 +11,8 @@
 </template>
 
 <script>
+import firebase from '@/plugins/firebase'
+
 export default {
   transition: {
     enter: () => {
@@ -18,17 +20,6 @@ export default {
     }
   }
 }
-
-// Initialize Firebase
-var config = {
-  apiKey: "AIzaSyDL74v9w6sB6XO-2RCTQaJUsojTkqtTZqE",
-  authDomain: "axel-gallery.firebaseapp.com",
-  databaseURL: "https://axel-gallery.firebaseio.com",
-  projectId: "axel-gallery",
-  storageBucket: "axel-gallery.appspot.com",
-  messagingSenderId: "586204948365"
-};
-firebase.initializeApp(config);
 
 /** 
  * 画像の初期化

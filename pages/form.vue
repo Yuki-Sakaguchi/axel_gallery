@@ -38,12 +38,14 @@ export default {
   methods: {
     checkForm: (evt) => {
       evt.preventDefault();
+      var self = this;
       var files = evt.target.querySelector('.file-input').files;
 
       if (files.length < 1) {
         return false;
       }
 
+      var isUploaded = false;
       for (var i = 0; i < files.length; i++) {
         var file = files[i];
 
@@ -51,18 +53,26 @@ export default {
         var storageRef = firebase.storage().ref('images/' + file.name);
         storageRef.put(file).then(function(snapshot) {
           console.log('Uploaded a blob or file!');
+          if (isUploaded) {
+            // modal
+            uploaded();
+          }
+          isUploaded = true;
         });
 
         // ファイルパスを保存
         var db = firebase.firestore();
         db.collection("images").add({
             file_name: file.name
-        })
-        .then(function(docRef) {
-            console.log("Document written with ID: ", docRef.id);
-        })
-        .catch(function(error) {
-            console.error("Error adding document: ", error);
+        }).then(function(docRef) {
+          console.log("Document written with ID: ", docRef.id);
+          if (isUploaded) {
+            // modal
+            uploaded();
+          }
+          isUploaded = true;
+        }).catch(function(error) {
+          console.error("Error adding document: ", error);
         });
       }
     }
@@ -151,6 +161,14 @@ function addInputElement(index) {
         }
     });
     return elBox;
+}
+
+function uploaded() {
+  alert('アップロードが完了しました');
+  document.getElementById('form').reset();
+  [].forEach.call(document.querySelectorAll('.preview'), function(e) {
+    e.textContent = null;
+  });
 }
 </script>
 

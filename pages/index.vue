@@ -1,6 +1,6 @@
 <template>
   <section class="container">
-    <div>
+    <div class="inner">
       <h1 class="title">axel_gallery</h1>
       <div class="links">
         <nuxt-link to="/about/" class="button--green">about</nuxt-link>
@@ -49,7 +49,18 @@ function initImage() {
         var elBlock = document.createElement('div');
         elBlock.className = 'image-box';
         elBlock.style.backgroundImage = 'url(' + url + ')';
+
+        var elTextBox = document.createElement('div');
+        elTextBox.className = 'image-title-box';
+
+        var elText = document.createElement('span');
+        elText.className = 'image-title';
+        elText.textContent = e;
+
+        elTextBox.appendChild(elText);
+        elBlock.appendChild(elTextBox);
         elImgArea.appendChild(elBlock);
+
       }).catch((error) => {
         console.log(error);
       });
@@ -64,6 +75,10 @@ function initImage() {
   justify-content: center;
   align-items: center;
   text-align: center;
+}
+
+.inner {
+  width: 100%;
 }
 
 .title {
@@ -93,17 +108,69 @@ function initImage() {
 
 .image-box {
   position: relative;
-  width: 50%;
+  width: 33.33%;
   display: inline-block;
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
   vertical-align: top;
+  transition: 0.3s;
+
+  &:hover {
+    transform: scale(1.1);
+    z-index: 1;
+    cursor: pointer;
+
+    &:after {
+      opacity: 1;
+    }
+
+    .image-title {
+      opacity: 1;
+    }
+  }
 
   &:before {
     content: '';
     display: block;
     padding-top: (9 / 16) * 100%
   }
+
+  &:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0,0,0,0.5);
+    opacity: 0;
+    transition: 0.3s;
+  }
+}
+
+.image-title-box {
+  display: flex;
+  justify-items: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  text-align: center;
+  z-index: 1;
+}
+
+.image-title {
+  display: block;
+  text-align: center;
+  word-wrap: break-word;
+  width: 80%;
+  margin: auto;
+  line-height: 1.2;
+  color: white;
+  transition: 0.3s;
+  opacity: 0;
 }
 </style>

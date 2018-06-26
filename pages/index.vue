@@ -37,14 +37,18 @@ function initImage() {
   var db = firebase.firestore();
   db.collection("images").get().then((querySnapshot) => {
     querySnapshot.forEach((doc) => {
-      imgList.push(doc.data().file_name);
+      imgList.push({
+        image: doc.data().file_name,
+        title: doc.data().title,
+      });
     });
   }).then(() => {
     // ファイル名を元に画像を取得し、画面に追加
     var elImgArea = document.getElementById('image-area');
 
     imgList.forEach((e, i) => {
-      var img = spaceRef.child(e);
+      var img = spaceRef.child(e.image);
+      var title = e.title;
       img.getDownloadURL().then((url) => {
         var elBlock = document.createElement('div');
         elBlock.className = 'image-box';
@@ -55,7 +59,7 @@ function initImage() {
 
         var elText = document.createElement('span');
         elText.className = 'image-title';
-        elText.textContent = e;
+        elText.textContent = title;
 
         elTextBox.appendChild(elText);
         elBlock.appendChild(elTextBox);

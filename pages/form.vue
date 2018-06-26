@@ -40,6 +40,7 @@ export default {
       evt.preventDefault();
       var self = this;
       var files = evt.target.querySelector('.file-input').files;
+      var title = evt.target.querySelector('.title-input');
 
       if (files.length < 1) {
         return false;
@@ -63,7 +64,8 @@ export default {
         // ファイルパスを保存
         var db = firebase.firestore();
         db.collection("images").add({
-            file_name: file.name
+          title: title.value ? title.value : 'no title',
+          file_name: file.name
         }).then(function(docRef) {
           console.log("Document written with ID: ", docRef.id);
           if (isUploaded) {
@@ -88,44 +90,61 @@ function addInputElement(index) {
     // Elementを生成
     let elBox = document.createElement('div');
     elBox.classList.add('input-box');
+
     let elTitle = document.createElement('h3');
     elTitle.classList.add('input-box__title');
     elTitle.textContent = 'Input ' + index;
+    
     let elDrop = document.createElement('div');
     elDrop.classList.add('drop-area');
+    
     let elDropText = document.createElement('span');
     elDropText.classList.add('drop-area__text');
     elDropText.innerHTML = 'ここにファイルを<br>ドロップしてください';
+
+    let elInputTitle = document.createElement('input');
+    elInputTitle.type = 'text';
+    elInputTitle.classList.add('title-input');
+    elInputTitle.name = 'title' + index;
+    
     let elFile = document.createElement('input');
     elFile.classList.add('file-input');
     elFile.type = 'file';
     elFile.name = 'image' + index;
+    
     let elInput = document.createElement('textarea');
     elInput.classList.add('text-input');
     elInput.name = 'text' + index;
+    
     let elPreview = document.createElement('div');
     elPreview.classList.add('preview');
+    
     elBox.appendChild(elTitle);
+    elBox.appendChild(elInputTitle);
     elBox.appendChild(elDrop);
     elDrop.appendChild(elDropText);
     elDrop.appendChild(elFile);
     elBox.appendChild(elInput);
     elBox.appendChild(elPreview);
+
     // イベントを追加
     const dragOver = 'dragover';
     const dragLeave = 'dragleave';
     const drop = 'drop';
     const maxFileCount = 3;
+
     // ファイルエリアにファイルを持ってマウスを乗せた時
     elDrop.addEventListener(dragOver, (e) => {
         e.preventDefault();
         elDrop.classList.add(dragOver);
     });
+    
     // ファイルエリアから外れた時
     elDrop.addEventListener(dragLeave, (e) => {
         e.preventDefault();
         elDrop.classList.remove(dragOver);
     });
+
     // ファイルエリアにファイルを落とした時
     elDrop.addEventListener(drop, (e) => {
         e.preventDefault();

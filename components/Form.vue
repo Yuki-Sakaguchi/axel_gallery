@@ -3,19 +3,24 @@
   form.vue
     firebaseの画像登録機能
 
+    TODO
+      - モーダルのオーバーレイ（閉じる）
+      - 画像、タイトル、テキスト、複数の登録できるように調整
+
 -->
 <template>
-  <section class="container">
-    <div>
-      <h1 class="title">form</h1>
-      <div class="add"></div>
+  <section>
+    <div id="add" class="add"></div>
+    <section id="modal" class="modal">
+      <h1 class="modal__title">画像の追加</h1>
+      <div id="in" class="add bg--blue"></div>
       <form action="/form/" id="form" class="form" @submit="checkForm" method="post" enctype="multipart/form-data">
         <div id="form-area" class="form-area">
           <!-- ここにinputのまとまりが追加される -->
         </div>
         <input id="submit" class="submit" type="submit" value="送信">
       </form>
-    </div>
+    </section>
   </section>
 </template>
 
@@ -24,22 +29,35 @@
 import firebase from '@/plugins/firebase'
 
 export default {
-  transition: {
-    enter: () => {
-      // this.$store.commit('initFirebase');
+  mounted: function() {
+    // this.$store.commit('initFirebase');
 
-      let elAdd = document.getElementsByClassName('add')[0];
-      let elFormArea = document.getElementById('form-area');
+    let elModal = document.getElementById('modal');
+    let elAdd = document.getElementById('add');
+    let elIn = document.getElementById('in');
+    let elFormArea = document.getElementById('form-area');
 
-      // 初めの一つ
-      elFormArea.appendChild(addInputElement(1));
+    // 初めの一つ
+    elFormArea.appendChild(addInputElement(1));
 
-      // クリックで増やす
-      elAdd.addEventListener('click', () => {
-          var elInputBox = elFormArea.querySelectorAll('.input-box');
-          elFormArea.appendChild(addInputElement(elInputBox.length+1));
-      });
-    }
+    // クリックで増やす
+    elIn.addEventListener('click', () => {
+      console.log('123');
+      var elInputBox = elFormArea.querySelectorAll('.input-box');
+      elFormArea.appendChild(addInputElement(elInputBox.length+1));
+    });
+
+    var isOn = false;
+    elAdd.addEventListener('click', () => {
+      if (isOn) {
+        elAdd.classList.remove('active');
+        elModal.classList.remove('active');
+      } else {
+        elAdd.classList.add('active');
+        elModal.classList.add('active');
+      }
+      isOn = !isOn;
+    });
   },
 
   methods: {
@@ -99,7 +117,7 @@ function addInputElement(index) {
 
     let elTitle = document.createElement('h3');
     elTitle.classList.add('input-box__title');
-    elTitle.textContent = 'Input ' + index;
+    elTitle.textContent = 'タイトルを入力してください';
     
     let elDrop = document.createElement('div');
     elDrop.classList.add('drop-area');
@@ -199,11 +217,35 @@ function uploaded() {
 
 
 <style lang="scss">
-.container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.modal {
   text-align: center;
+  width: 80%;
+  height: 600px;
+  overflow: scroll;
+  background: white;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  margin: auto;
+  z-index: 1;
+  box-shadow: 0 0 5px 2px rgba(0,0,0,0.5);
+  transition: 0.3s;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(30px);
+
+  &.active {
+    opacity: 1;
+    pointer-events: inherit;
+    transform: translateX(0);
+  }
+
+  &__title {
+    font-size: 30px;
+    margin: 40px 20px;
+  }
 }
 
 .title {
@@ -271,22 +313,25 @@ function uploaded() {
     display: block;
     margin: auto;
 }
+
+// 追加ボタン
 .add {
-    position: fixed;
-    width: 50px;
-    height: 50px;
-    background-color: #60d1a8;
-    top: 30px;
-    right: 30px;
-    border-radius: 100%;
-    transition: 0.3s;
-    cursor: pointer;
-}
-.add:hover {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  background-color: #60d1a8;
+  top: 80px;
+  right: 30px;
+  border-radius: 100%;
+  transition: 0.3s;
+  cursor: pointer;
+
+  &:hover {
     box-shadow: 0 0 8px 1px rgba(0,0,0,0.4);
     transform: scale(1.1);
-}
-.add::before {
+  }
+  
+  &:before {
     content: "";
     width: 60%;
     height: 2px;
@@ -297,17 +342,28 @@ function uploaded() {
     bottom: 0;
     left: 0;
     margin: auto;
+  }
+
+  &:after {
+      content: "";
+      height: 60%;
+      width: 2px;
+      background-color: white;
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      margin: auto;
+  }
+
+  &.active {
+    transform: rotate(45deg);
+    background-color: $C_GRAY;
+  }
 }
-.add::after {
-    content: "";
-    height: 60%;
-    width: 2px;
-    background-color: white;
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    margin: auto;
+
+.bg--blue {
+  background-color: $C_BLUE;
 }
 </style>

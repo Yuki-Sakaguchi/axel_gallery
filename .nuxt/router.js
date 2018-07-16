@@ -3,8 +3,9 @@ import Router from 'vue-router'
 
 Vue.use(Router)
 
-const _60e2cb58 = () => import('../pages/about.vue' /* webpackChunkName: "pages/about" */).then(m => m.default || m)
 const _35f4d8cd = () => import('../pages/form.vue' /* webpackChunkName: "pages/form" */).then(m => m.default || m)
+const _6f65f561 = () => import('../pages/chat.vue' /* webpackChunkName: "pages/chat" */).then(m => m.default || m)
+const _b37ad84e = () => import('../pages/gallery.vue' /* webpackChunkName: "pages/gallery" */).then(m => m.default || m)
 const _217315ce = () => import('../pages/index.vue' /* webpackChunkName: "pages/index" */).then(m => m.default || m)
 
 
@@ -66,14 +67,19 @@ export function createRouter () {
     scrollBehavior,
     routes: [
 		{
-			path: "/about",
-			component: _60e2cb58,
-			name: "about"
-		},
-		{
 			path: "/form",
 			component: _35f4d8cd,
 			name: "form"
+		},
+		{
+			path: "/chat",
+			component: _6f65f561,
+			name: "chat"
+		},
+		{
+			path: "/gallery",
+			component: _b37ad84e,
+			name: "gallery"
 		},
 		{
 			path: "/",

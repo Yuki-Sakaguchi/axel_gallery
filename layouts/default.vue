@@ -1,3 +1,9 @@
+<!--
+
+  default.vue
+    基本的なレイアウト
+
+-->
 <template>
   <div class="wrapper">
     <Menu/>
@@ -5,15 +11,25 @@
   </div>
 </template>
 
+
 <script>
 import Menu from '~/components/Menu.vue'
 
 export default {
+  // <title>の設定
+  data () {
+    return {
+      title: 'TOP'
+    }
+  },
+
+  // メニューを追加
   components: {
     Menu
   }
 }
 </script>
+
 
 <style lang="scss">
 .button--green {

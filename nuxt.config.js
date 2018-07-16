@@ -46,4 +46,12 @@ module.exports = {
   css: [
     '@/assets/css/main.scss'
   ],
+
+  // どこからでも参照できるscssを読み込む
+  modules: [
+    ['nuxt-sass-resources-loader', [
+      '@/assets/css/common/_variables.scss',
+      '@/assets/css/common/_mixins.scss',
+    ]],
+  ],
 }

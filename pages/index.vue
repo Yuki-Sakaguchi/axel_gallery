@@ -1,77 +1,38 @@
 <template>
-  <section class="container">
-    <div class="inner">
-      <h1 class="title">axel_gallery</h1>
-      <div class="links">
-        <nuxt-link to="/about/" class="button--green">about</nuxt-link>
+    <section class="container">
+      <div class="inner">
+        <h1 class="title">{{ title }}</h1>
+        <div class="content">
+          <p>
+            Nuxt.jsとFarebaseで色々やっているサイトです。
+          </p>
+        </div>
       </div>
-      <div id="image-area" class="image-area"></div>
-    </div>
-  </section>
+    </section>
 </template>
 
-<script>
-import firebase from '@/plugins/firebase'
 
+<script>
 export default {
-  transition: {
-    enter: () => {
-      initImage();
+  // <title>の設定
+  data () {
+    return {
+      title: 'TOP'
+    }
+  },
+
+  // <meta>の設定
+  head () {
+    return {
+      title: this.title,
+      meta: [
+        { hid: 'description', name: 'description', content: 'axel_galleryのトップページです。' }
+      ]
     }
   }
 }
-
-/** 
- * 画像の初期化
- */
-function initImage() {
-  // 画像の名前リスト
-  var imgList = [];
-
-  // firebaseのストレージにアクセス
-  var storage = firebase.storage();
-  var storageRef = storage.ref();
-  var spaceRef = storageRef.child('images');
-
-  // DBからファイル名を取得
-  var db = firebase.firestore();
-  db.collection("images").get().then((querySnapshot) => {
-    querySnapshot.forEach((doc) => {
-      imgList.push({
-        image: doc.data().file_name,
-        title: doc.data().title,
-      });
-    });
-  }).then(() => {
-    // ファイル名を元に画像を取得し、画面に追加
-    var elImgArea = document.getElementById('image-area');
-
-    imgList.forEach((e, i) => {
-      var img = spaceRef.child(e.image);
-      var title = e.title;
-      img.getDownloadURL().then((url) => {
-        var elBlock = document.createElement('div');
-        elBlock.className = 'image-box';
-        elBlock.style.backgroundImage = 'url(' + url + ')';
-
-        var elTextBox = document.createElement('div');
-        elTextBox.className = 'image-title-box';
-
-        var elText = document.createElement('span');
-        elText.className = 'image-title';
-        elText.textContent = title;
-
-        elTextBox.appendChild(elText);
-        elBlock.appendChild(elTextBox);
-        elImgArea.appendChild(elBlock);
-
-      }).catch((error) => {
-        console.log(error);
-      });
-    });
-  })
-}
 </script>
+
 
 <style lang="scss">
 .container {
